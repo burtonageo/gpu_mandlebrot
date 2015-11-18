@@ -44,7 +44,7 @@ fn main() {
         let vec_dst: Vec<f32> = queue.get(&cl_dst_buf, &event);
 
         println!("  {:?}", &vec_src[..]);
-        println!("+ {:?}", COEFF);
+        println!("* {:?}", COEFF);
         println!("= {:?}", &vec_dst[..]);
     }
 
