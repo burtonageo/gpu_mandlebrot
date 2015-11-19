@@ -3,10 +3,10 @@
 extern crate opencl;
 extern crate sdl2;
 
-use sdl2::pixels::Color;
 use sdl2::keyboard::Keycode;
+use sdl2::pixels::{Color, self};
 
-const KERNEL: &'static str = r"
+const KERNEL_SOURCE: &'static str = r"
 __kernel void multiply_by_scalar(__global float const* const src_buf,
                                  __private float const coeff,
                                  __global float* dst_buf) {
@@ -29,7 +29,7 @@ fn main() {
         queue.write(&cl_src_buf, &&vec_src[..], ());
 
         let program = {
-            let p = ctx.create_program_from_source(KERNEL);
+            let p = ctx.create_program_from_source(KERNEL_SOURCE);
             p.build(&device).expect("Could not build program");
             p
         };
@@ -56,6 +56,9 @@ fn main() {
                           .build()
                           .expect("Could not create a window from the video subsystem")
                           .renderer()
+                          .accelerated()
+                          .present_vsync()
+                          .target_texture()
                           .build()
                           .expect("Could not get renderer from window");
 
@@ -71,6 +74,21 @@ fn main() {
 
         renderer.set_draw_color(Color::RGB(255, 0, 0));
         renderer.clear();
+
+        let info = renderer.info();
+        let (mx, my) = (info.max_texture_width, info.max_texture_height);
+        let _ = renderer.create_texture_streaming(pixels::PixelFormatEnum::RGB888, (mx, my))
+                        .and_then(|mut tex| {
+                            tex.with_lock(None, |pixels, _pitch| {
+                                for pixel in pixels {
+                                    *pixel = 0xFF;
+                                }
+                            }).expect("Could not write pixels to screen texture");
+                            Ok(tex)
+                        })
+                        .and_then(|tex| Ok(renderer.copy(&tex, None, None)))
+                        .expect("Could not create texture from renderer");
+
         renderer.present();
     }
 }
