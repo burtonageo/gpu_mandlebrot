@@ -50,7 +50,7 @@ dependencies = [
 [[package]]
 name = "opencl"
 version = "0.3.0-dev"
-source = "git+https://github.com/luqmana/rust-opencl#021c7f2c99cbb81a8d8de0c04b6ef02c49d7c160"
+source = "git+https://github.com/luqmana/rust-opencl#f540365029e9a1a48fa349eef12f3b568101cf27"
 dependencies = [
  "libc 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
