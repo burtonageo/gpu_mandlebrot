@@ -68,7 +68,7 @@ fn main() {
     renderer.set_draw_color(Color::RGB(255, 0, 0));
 
     let sz = renderer.window().map(|w| w.size()).unwrap_or((0, 0));
-    let mut tex = renderer.create_texture_streaming(pixels::PixelFormatEnum::RGB888, sz).unwrap();
+    let mut tex = renderer.create_texture_streaming(pixels::PixelFormatEnum::ARGB8888, sz).unwrap();
 
     let mut events = sdl.event_pump().expect("Could not initialise events");
 
