@@ -97,7 +97,7 @@ fn main() {
            })
            .expect("Could not write pixels to screen texture");
 
-        renderer.copy(&tex, None, Some(Rect::new_unwrap(0, 0, 800, 600)));
+        renderer.copy(&tex, None, Some(Rect::new_unwrap(0, 0, sz.0, sz.1)));
 
         renderer.present();
     }
