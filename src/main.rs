@@ -92,7 +92,7 @@ fn main() {
                    } else {
                        col += 1;
                    }
-                   *pixel = 0x00 + col as u8;
+                   *pixel = (row * col) as u8;
                }
            })
            .expect("Could not write pixels to screen texture");
